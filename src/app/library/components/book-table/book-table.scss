@@ -1,0 +1,93 @@
+.table-wrap {
+  overflow: auto;
+  border: 1px solid var(--mat-sys-outline-variant);
+  border-radius: 12px;
+  background: var(--mat-sys-surface);
+}
+
+table {
+  width: 100%;
+}
+
+.title {
+  font-weight: 500;
+}
+
+// Custom Author sort control, styled like a Material sort header with a permanent arrow.
+.author-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0 0 0 -4px;
+  padding: 4px;
+  border: 0;
+  border-radius: 4px;
+  background: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+
+  mat-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+  }
+
+  &:hover {
+    background: var(--mat-sys-surface-container-high);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary);
+    outline-offset: 1px;
+  }
+}
+
+.author {
+  font-weight: 500;
+  color: var(--mat-sys-primary);
+}
+
+// Rows inside a group get a faint divider; a new author group gets a stronger one.
+tr.mat-mdc-row {
+  --mat-table-row-item-outline-color: var(--mat-sys-surface-container-highest);
+}
+
+tr.group-start:not(:first-of-type) td {
+  border-top: 1px solid var(--mat-sys-outline-variant);
+}
+
+.num {
+  text-align: right;
+  width: 96px;
+  font-variant-numeric: tabular-nums;
+}
+
+th.num ::ng-deep .mat-sort-header-container {
+  justify-content: flex-end;
+}
+
+.actions {
+  width: 112px;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.empty td {
+  border-top: 0;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--mat-sys-on-surface-variant);
+
+  mat-icon {
+    width: 40px;
+    height: 40px;
+    font-size: 40px;
+    opacity: 0.6;
+  }
+
+  p {
+    margin: 4px 0;
+  }
+}

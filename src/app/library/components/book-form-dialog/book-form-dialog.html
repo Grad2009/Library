@@ -1,0 +1,65 @@
+<h2 mat-dialog-title>{{ isEdit ? 'Edit book' : 'Add book' }}</h2>
+
+<form [formGroup]="form" (ngSubmit)="save()" novalidate>
+  <mat-dialog-content>
+    @if (isDuplicate()) {
+      <div class="duplicate-warning" role="alert" data-testid="duplicate-warning">
+        <mat-icon aria-hidden="true">warning</mat-icon>
+        <span>
+          A book by <strong>{{ form.controls.author.value.trim() }}</strong> titled
+          <strong>{{ form.controls.title.value.trim() }}</strong> already exists.
+        </span>
+      </div>
+    }
+
+    <mat-form-field appearance="outline">
+      <mat-label>Title</mat-label>
+      <input
+        matInput
+        formControlName="title"
+        required
+        cdkFocusInitial
+        autocomplete="off"
+        [maxlength]="limits.title"
+      />
+      @if (form.controls.title.hasError('required')) {
+        <mat-error>Title is required</mat-error>
+      } @else if (form.controls.title.hasError('maxlength')) {
+        <mat-error>At most {{ limits.title }} characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline">
+      <mat-label>Author</mat-label>
+      <input
+        matInput
+        formControlName="author"
+        required
+        autocomplete="off"
+        [maxlength]="limits.author"
+      />
+      @if (form.controls.author.hasError('required')) {
+        <mat-error>Author is required</mat-error>
+      } @else if (form.controls.author.hasError('maxlength')) {
+        <mat-error>At most {{ limits.author }} characters</mat-error>
+      }
+    </mat-form-field>
+
+    <mat-form-field appearance="outline" class="pages">
+      <mat-label>Pages</mat-label>
+      <input matInput type="number" formControlName="pages" min="1" [max]="limits.pages" step="1" />
+      @if (form.controls.pages.hasError('required')) {
+        <mat-error>Pages are required</mat-error>
+      } @else if (form.controls.pages.invalid) {
+        <mat-error>A whole number from 1 to {{ limits.pages }}</mat-error>
+      }
+    </mat-form-field>
+  </mat-dialog-content>
+
+  <mat-dialog-actions align="end">
+    <button mat-button type="button" mat-dialog-close>Cancel</button>
+    <button mat-flat-button type="submit" [disabled]="isDuplicate()" data-testid="save">
+      {{ isEdit ? 'Save' : 'Add' }}
+    </button>
+  </mat-dialog-actions>
+</form>

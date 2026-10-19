@@ -1,0 +1,102 @@
+<div class="table-wrap">
+  <table
+    mat-table
+    [dataSource]="books()"
+    [trackBy]="trackById"
+    matSort
+    matSortDisableClear
+    [matSortActive]="sort().within"
+    [matSortDirection]="sort().withinDirection"
+    (matSortChange)="onWithinSortChange($event)"
+    aria-label="Books, grouped by author"
+  >
+    <ng-container matColumnDef="author">
+      <th mat-header-cell *matHeaderCellDef [attr.aria-sort]="authorAriaSort()">
+        <button
+          type="button"
+          class="author-sort"
+          (click)="onAuthorClick()"
+          matTooltip="Change the order of author groups"
+          [attr.aria-label]="'Author groups, ' + authorAriaSort() + '. Activate to sort ' +
+            (sort().authorDirection === 'asc' ? 'descending' : 'ascending')"
+          data-testid="author-sort"
+        >
+          Author
+          <mat-icon aria-hidden="true">
+            {{ sort().authorDirection === 'asc' ? 'arrow_upward' : 'arrow_downward' }}
+          </mat-icon>
+        </button>
+      </th>
+      <td mat-cell *matCellDef="let book" class="author">
+        <span [class.cdk-visually-hidden]="!groupStarts().has(book.id)">{{ book.author }}</span>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="title">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        mat-sort-header
+        sortActionDescription="Sort titles within each author"
+        matTooltip="Sort within each author"
+      >
+        Title
+      </th>
+      <td mat-cell *matCellDef="let book" class="title">{{ book.title }}</td>
+    </ng-container>
+    <ng-container matColumnDef="pages">
+      <th
+        mat-header-cell
+        *matHeaderCellDef
+        class="num"
+      >
+        Pages
+      </th>
+      <td mat-cell *matCellDef="let book" class="num">{{ book.pages }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef class="actions">
+        <span class="cdk-visually-hidden">Actions</span>
+      </th>
+      <td mat-cell *matCellDef="let book" class="actions">
+        <button
+          mat-icon-button
+          (click)="edit.emit(book)"
+          matTooltip="Edit"
+          [attr.aria-label]="'Edit ' + book.title"
+        >
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button
+          mat-icon-button
+          (click)="remove.emit(book)"
+          matTooltip="Delete"
+          [attr.aria-label]="'Delete ' + book.title"
+        >
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns; sticky: true"></tr>
+    <tr
+      mat-row
+      *matRowDef="let row; columns: columns"
+      [class.group-start]="groupStarts().has(row.id)"
+    ></tr>
+
+    <tr class="mat-row empty" *matNoDataRow>
+      <td class="mat-cell" [attr.colspan]="columns.length">
+        @if (totalCount() === 0) {
+          <mat-icon aria-hidden="true">menu_book</mat-icon>
+          <p><strong>Your library is empty</strong></p>
+          <p>Import an XML file or add a book to get started.</p>
+        } @else {
+          <mat-icon aria-hidden="true">search_off</mat-icon>
+          <p>No titles match “{{ query() }}”.</p>
+        }
+      </td>
+    </tr>
+  </table>
+</div>

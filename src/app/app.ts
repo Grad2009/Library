@@ -1,12 +1,12 @@
-import { Component, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import LibraryPage from './library/library-page/library-page';
+import {MatIconModule} from '@angular/material/icon';
 
 @Component({
-  imports: [RouterOutlet],
+  imports: [LibraryPage, MatIconModule],
   selector: 'app-root',
-  styleUrl: './app.css',
+  styleUrl: './app.scss',
   templateUrl: './app.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {
-  protected readonly title = signal('Library');
-}
+export class App {}

@@ -1,0 +1,30 @@
+.file {
+  margin: 0 0 12px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-label-large);
+  word-break: break-all;
+}
+.row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  font: var(--mat-sys-title-small);
+  color: var(--mat-sys-on-surface);
+}
+.added mat-icon {
+  color: #2e7d32;
+}
+.warn mat-icon {
+  color: #b26a00;
+}
+.error mat-icon {
+  color: var(--mat-sys-error);
+}
+ul {
+  margin: 4px 0 0;
+  padding-left: 40px;
+  font: var(--mat-sys-body-medium);
+  max-height: 200px;
+  overflow: auto;
+}

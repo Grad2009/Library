@@ -1,0 +1,44 @@
+<mat-form-field appearance="outline" class="search" subscriptSizing="dynamic">
+  <mat-icon matPrefix aria-hidden="true">search</mat-icon>
+  <mat-label>Search by title</mat-label>
+  <input
+    matInput
+    type="search"
+    autocomplete="off"
+    [value]="query()"
+    (input)="queryChange.emit($any($event.target).value)"
+    data-testid="search"
+  />
+  @if (query()) {
+    <button matSuffix mat-icon-button aria-label="Clear search" (click)="queryChange.emit('')">
+      <mat-icon>close</mat-icon>
+    </button>
+  }
+</mat-form-field>
+
+<div class="actions">
+  <input
+    #fileInput
+    type="file"
+    accept=".xml,application/xml,text/xml"
+    hidden
+    (change)="onFile(fileInput)"
+    data-testid="file-input"
+  />
+  <button
+    mat-stroked-button
+    (click)="fileInput.click()"
+    matTooltip="Add books from an XML file"
+  >
+    <mat-icon>upload_file</mat-icon> Import XML
+  </button>
+  <button
+    mat-stroked-button
+    (click)="exportClick.emit()"
+    [disabled]="!canExport()"
+    matTooltip="Download the whole library as XML"
+  >
+    <mat-icon>download</mat-icon> Export XML
+  </button>
+  <button mat-flat-button (click)="addClick.emit()"><mat-icon>add</mat-icon> Add book</button>
+</div>

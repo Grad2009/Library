@@ -1,0 +1,9 @@
+:host {
+  display: block;
+}
+.status {
+  min-height: 20px;
+  margin: 12px 4px 8px;
+  color: var(--mat-sys-on-surface-variant);
+  font: var(--mat-sys-body-medium);
+}

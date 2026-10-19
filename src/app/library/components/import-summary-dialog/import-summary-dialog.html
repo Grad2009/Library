@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>Import summary</h2>
+<mat-dialog-content>
+  <p class="file">{{ data.fileName }}</p>
+
+  <div class="row added">
+    <mat-icon aria-hidden="true">check_circle</mat-icon>
+    <span>{{ data.added }} {{ data.added === 1 ? 'book' : 'books' }} added</span>
+  </div>
+
+  @if (data.duplicates?.length) {
+    <div class="row warn">
+      <mat-icon aria-hidden="true">content_copy</mat-icon>
+      <span>
+        {{ data.duplicates.length }} duplicate{{data.duplicates.length === 1 ? '' : 's'}} skipped
+      </span>
+    </div>
+    <ul>
+      @for (d of data.duplicates; track $index) {
+        <li>
+          <em>{{ d.title }}</em>
+          ({{ d.author }}) — {{ d.source === 'library' ? 'already in library' : 'repeated in file' }}
+        </li>
+      }
+    </ul>
+  }
+
+  @if (data.issues?.length) {
+    <div class="row error">
+      <mat-icon aria-hidden="true">error</mat-icon>
+      <span>{{ data.issues.length }} problem{{ data.issues.length === 1 ? '' : 's' }} found</span>
+    </div>
+    <ul>
+      @for (issue of data.issues; track $index) {
+        <li>
+          @if (issue.recordIndex !== null) {
+            Book №{{ issue.recordIndex }}:
+          }
+          {{ issue.message }}
+        </li>
+      }
+    </ul>
+  }
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-flat-button mat-dialog-close>OK</button>
+</mat-dialog-actions>

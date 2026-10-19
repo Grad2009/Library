@@ -1,0 +1,28 @@
+<app-library-toolbar
+  [query]="store.query()"
+  [canExport]="store.totalCount() > 0"
+  (queryChange)="store.setQuery($event)"
+  (importFile)="importFile($event)"
+  (exportClick)="exportLibrary()"
+  (addClick)="openAdd()"
+/>
+
+<div class="status">
+  @if (importing()) {
+    <mat-progress-bar mode="indeterminate" />
+  } @else if (store.query()) {
+    Showing {{ store.visibleBooks().length }} of {{ store.totalCount() }} books
+  } @else if (store.totalCount()) {
+    {{ store.totalCount() }} {{ store.totalCount() === 1 ? 'book' : 'books' }}
+  }
+</div>
+
+<app-book-table
+  [books]="store.visibleBooks()"
+  [sort]="store.sort()"
+  [totalCount]="store.totalCount()"
+  [query]="store.query()"
+  (sortChange)="store.setSort($event)"
+  (edit)="openEdit($event)"
+  (remove)="confirmRemove($event)"
+/>

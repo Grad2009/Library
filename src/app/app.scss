@@ -1,0 +1,22 @@
+header {
+  background: var(--mat-sys-primary);
+  color: var(--mat-sys-on-primary);
+}
+.inner, main {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding: 0 16px;
+}
+.inner {
+  display: flex;
+  align-items: center;
+  height: 64px;
+}
+h1 {
+  margin: 0;
+  font: var(--mat-sys-title-large);
+}
+main {
+  padding-top: 24px;
+  padding-bottom: 48px;
+}
